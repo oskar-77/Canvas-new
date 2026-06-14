@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "CanvasAnvil"
+version = "1.0.0"
+id = "artifacts/canvas-anvil"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23965
+
+[services.development]
+run = "pnpm --filter @workspace/canvas-anvil run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/canvas-anvil", "run", "build" ]
+publicDir = "artifacts/canvas-anvil/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23965"
+BASE_PATH = "/"
