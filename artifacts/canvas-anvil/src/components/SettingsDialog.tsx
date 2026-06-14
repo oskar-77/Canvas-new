@@ -380,6 +380,13 @@ export function SettingsDialog() {
                     >
                       {t(uiLang, "settings.language.en")}
                     </Button>
+                    <Button
+                      variant={uiLang === "ar" ? "secondary" : "ghost"}
+                      className="h-8 rounded-md px-3"
+                      onClick={() => setUiLangState("ar")}
+                    >
+                      {t(uiLang, "settings.language.ar")}
+                    </Button>
                   </div>
                 </SectionCard>
 

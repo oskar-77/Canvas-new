@@ -23,7 +23,7 @@ const APP_WORKSPACE_STORAGE_KEY = "CanvasAnvil-active-workspace-v1";
 function BrandIcon({ className }: { className?: string }) {
   return (
     <span className={cn("inline-flex h-10 w-10 shrink-0 items-center justify-center", className)}>
-      <svg viewBox="0 0 48 48" role="img" aria-label="CanvasAnvil" className="h-full w-full drop-shadow-[0_8px_18px_rgba(35,108,255,0.22)]">
+      <svg viewBox="0 0 48 48" role="img" aria-label="Mr.OSKAR" className="h-full w-full drop-shadow-[0_8px_18px_rgba(35,108,255,0.22)]">
         <path d="M24 3.8 42 12.8 24 21.8 6 12.8 24 3.8Z" fill="#236CFF" />
         <path d="M24 8.6 32.4 12.8 24 17 15.6 12.8 24 8.6Z" fill="#8EC1FF" />
         <path d="M8.8 17.5 24 25.1l15.2-7.6v5.7L24 30.8 8.8 23.2v-5.7Z" fill="#0B77F4" />
@@ -118,7 +118,7 @@ function App() {
           onClick={() => setShowLanding(true)}
         >
           <BrandIcon className="h-10 w-10" />
-          <span>CanvasAnvil</span>
+          <span>Mr.OSKAR</span>
         </div>
 
         <div className="justify-self-center max-w-full overflow-x-auto">

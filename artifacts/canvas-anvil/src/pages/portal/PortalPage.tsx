@@ -2,6 +2,7 @@ import { type Dispatch, type SetStateAction, useEffect, useRef, useState } from 
 import { AnimatePresence, motion } from "framer-motion";
 import {
   Blocks,
+  BookOpen,
   ChartNoAxesCombined,
   CheckCircle2,
   Code2,
@@ -31,7 +32,7 @@ type PortalPageProps = {
   onEnterWorkspace: (workspace: PortalWorkspace) => void;
 };
 
-type PortalSection = "home" | PortalWorkspace;
+type PortalSection = "home" | PortalWorkspace | "docs";
 
 type DetailConfig = {
   title: string;
@@ -78,7 +79,7 @@ function OrbitNode({ angle, radius, delay }: { angle: number; radius: number; de
 function BrandIcon({ className }: { className?: string }) {
   return (
     <span className={cn("inline-flex h-11 w-11 shrink-0 items-center justify-center", className)}>
-      <svg viewBox="0 0 48 48" role="img" aria-label="CanvasAnvil" className="h-full w-full drop-shadow-[0_8px_18px_rgba(35,108,255,0.22)]">
+      <svg viewBox="0 0 48 48" role="img" aria-label="Mr.OSKAR" className="h-full w-full drop-shadow-[0_8px_18px_rgba(35,108,255,0.22)]">
         <path d="M24 3.8 42 12.8 24 21.8 6 12.8 24 3.8Z" fill="#236CFF" />
         <path d="M24 8.6 32.4 12.8 24 17 15.6 12.8 24 8.6Z" fill="#8EC1FF" />
         <path d="M8.8 17.5 24 25.1l15.2-7.6v5.7L24 30.8 8.8 23.2v-5.7Z" fill="#0B77F4" />
@@ -352,8 +353,121 @@ const detailConfigsEn: Record<PortalWorkspace, DetailConfig> = {
   },
 };
 
+const detailConfigsAr: Record<PortalWorkspace, DetailConfig> = {
+  flow: {
+    title: "لوحة التدفق",
+    subtitle: "حوّل جملة واحدة إلى مخطط تدفق منظم",
+    intro: "تحوّل لوحة التدفق وصفك بلغة طبيعية إلى مخططات قابلة للتحرير. تدعم تحرير العقد والوصلات، والتعديلات المحلية، وتصدير XML لـ draw.io.",
+    tags: ["مخططات منظمة", "تعديلات محلية", "draw.io XML"],
+    bullets: ["تحليل المتطلبات واستخراج العقد والعلاقات آلياً", "تحرير العقد والوصلات مباشرةً بالسحب والإفلات", "تعديل أجزاء محددة دون إعادة إنشاء المخطط كاملاً", "تصدير XML لـ draw.io للتعاون وإعادة الاستخدام"],
+    previews: detailConfigs.flow.previews,
+    steps: [
+      { title: "وصف", text: "أدخل الأهداف وتفاصيل العملية والقيود.", icon: FileText },
+      { title: "تحليل", text: "يستخرج الذكاء الاصطناعي العقد والعلاقات والاتجاهات.", icon: Share2 },
+      { title: "إنشاء XML", text: "تحويل البنية إلى بيانات متوافقة مع draw.io.", icon: Code2 },
+      { title: "مراجعة", text: "التحقق من تطابق العقد والوصلات مع المقصود.", icon: ChartNoAxesCombined },
+      { title: "تعديل", text: "ضبط العقد أو الوصلات المحددة.", icon: Pencil },
+      { title: "تصدير", text: "تصدير XML للتعاون وإعادة الاستخدام.", icon: Upload },
+    ],
+    cta: "ابدأ الرسم",
+    slogan: "أنشئ مخططات التدفق بحرية اللوحة",
+  },
+  cad: {
+    title: "لوحة التصميم الداخلي",
+    subtitle: "من متطلبات الفراغ إلى الرسومات والتصيير وقوائم المواد",
+    intro: "تحوّل لوحة التصميم الداخلي متطلبات الغرفة إلى حزم تصميم شاملة، بما فيها المخططات والمقاطع والتفاصيل ومراجع التصيير وقوائم المواد.",
+    tags: ["تخطيط الفراغ", "SVG ثنائي الأبعاد", "التصيير / المواد"],
+    bullets: ["تحليل المسقط الأفقي والمناطق الوظيفية", "إنشاء مخططات مترابطة: أفقي وعمودي وسقف وتفاصيل", "استخدام مراجع التصيير لعرض الفراغ الحقيقي", "تصدير الرسومات وقوائم المواد للتسليم"],
+    previews: detailConfigs.cad.previews,
+    steps: [
+      { title: "إدخال المتطلبات", text: "أدخل معلومات الغرفة واحتياجات التصميم.", icon: FileText },
+      { title: "تخطيط الفراغ", text: "تحليل المناطق والحركة.", icon: Package },
+      { title: "إنشاء المخطط", text: "إنشاء الرسومات الأفقية والأبعاد.", icon: Home },
+      { title: "ربط الرسومات", text: "ربط المقاطع والأسقف والتفاصيل.", icon: Layers3 },
+      { title: "فحص التصيير", text: "إنشاء مراجع التصيير ومراجعة المواد.", icon: Image },
+      { title: "تصدير", text: "تصدير الرسومات وقوائم المواد.", icon: Upload },
+    ],
+    cta: "ابدأ الرسم",
+    slogan: "اجعل التصميم الداخلي سلساً كاللوحة",
+  },
+  ppt: {
+    title: "لوحة العروض",
+    subtitle: "من الموضوع إلى العرض الكامل مع تحرير صفحة بصفحة",
+    intro: "تحوّل لوحة العروض موضوعك إلى مخطط عرض، وتقسّمه إلى شرائح، وتدعم إنشاء الشرائح ومراجعتها وتعديلها محلياً.",
+    tags: ["المخطط أولاً", "تحرير الشرائح", "قوالب متسقة"],
+    bullets: ["تحويل الموضوع إلى مخطط عرض واضح", "تقسيم المحتوى إلى شرائح: غلاف وجدول وأهداف وخلاصة", "تعديل أو توسيع شرائح منفردة", "تصدير ملفات عرض قابلة للتعديل"],
+    previews: detailConfigs.ppt.previews,
+    steps: [
+      { title: "إدخال الموضوع", text: "أدخل الموضوع والجمهور المستهدف.", icon: FileText },
+      { title: "بناء المخطط", text: "إنشاء الفصول والبنية السردية.", icon: Share2 },
+      { title: "تقسيم الشرائح", text: "تحديد الغلاف والجدول والرسوم والخلاصة.", icon: Blocks },
+      { title: "إنشاء", text: "إنشاء الشرائح من المخطط وأنواع الصفحات.", icon: Presentation },
+      { title: "تكرار", text: "إعادة كتابة الشرائح أو توسيعها أو تعديلها.", icon: Pencil },
+      { title: "تصدير PPT", text: "تصدير ملف PPT قابل للتعديل.", icon: Upload },
+    ],
+    cta: "ابدأ الرسم",
+    slogan: "اجعل إنشاء العروض سلساً وبصرياً",
+  },
+  poster: {
+    title: "لوحة الملصقات",
+    subtitle: "صور الحملات وتخطيط النصوص في صفحة واحدة",
+    intro: "تنشئ لوحة الملصقات صوراً رئيسية وتخطيطات نصية لحملات العلامة التجارية والفعاليات ومنصات التواصل الاجتماعي.",
+    tags: ["يُحرّكه الأسلوب", "الصورة الرئيسية", "تخطيط النصوص"],
+    bullets: ["دعم الأحجام الأفقية والعمودية لمختلف المنصات", "تبديل الأساليب للعلامات التجارية والفعاليات المختلفة", "ترتيب نصوص الملصق بتسلسل هرمي واضح", "تعديل الصور والخطوط والألوان والتفاصيل محلياً"],
+    previews: detailConfigs.poster.previews,
+    steps: [
+      { title: "إدخال الموضوع", text: "أدخل موضوع الحملة أو المنتج أو العلامة التجارية.", icon: FileText },
+      { title: "تحديد الأسلوب", text: "اختر اللون والتخطيط والاتجاه البصري.", icon: Wand2 },
+      { title: "إنشاء الصورة", text: "إنشاء الصورة ولوحة الألوان والعناصر الرئيسية.", icon: Image },
+      { title: "تخطيط النصوص", text: "ترتيب العنوان والنص ومعلومات الفعالية.", icon: FileText },
+      { title: "تنقيح", text: "ضبط الصور والخطوط والألوان والتفاصيل.", icon: Pencil },
+      { title: "تصدير", text: "تصدير الملصق النهائي.", icon: Upload },
+    ],
+    cta: "ابدأ الرسم",
+    slogan: "حوّل أفكار الملصق إلى تصميم نهائي أسرع",
+  },
+  infographic: {
+    title: "لوحة المخططات البيانية",
+    subtitle: "هيكل المعلومات ثم اجعلها بصرية",
+    intro: "تحوّل لوحة المخططات البيانية البيانات والآراء والموضوعات إلى صفحة بيانية مرئية بالوحدات والرسوم البيانية والتسلسل الهرمي الواضح.",
+    tags: ["هيكلة المعلومات", "وحدات الرسم البياني", "التخطيط المُنشأ"],
+    bullets: ["قبول الملاحظات والنصوص ومصادر البيانات", "اقتراح مجموعات الرسوم البيانية والوحدات المناسبة", "إيصال معلومات معقدة بنظرة واحدة", "تعديل المحتوى والأسلوب البصري محلياً"],
+    previews: detailConfigs.infographic.previews,
+    steps: [
+      { title: "إدخال البيانات", text: "أدخل الملاحظات أو النقاط الرئيسية أو البيانات.", icon: FileText },
+      { title: "هيكلة", text: "تقسيم المعلومات إلى علاقات واضحة.", icon: Share2 },
+      { title: "اختيار الرسوم", text: "اقتراح الرسوم البيانية والوحدات البصرية.", icon: ChartNoAxesCombined },
+      { title: "تخطيط", text: "تجميع الوحدات في صفحة.", icon: Blocks },
+      { title: "تلميع", text: "توحيد اللون والخط وأسلوب الأيقونات.", icon: Wand2 },
+      { title: "تصدير", text: "تصدير PNG أو PDF أو SVG أو صيغ أخرى.", icon: Upload },
+    ],
+    cta: "ابدأ الرسم",
+    slogan: "اجعل المعلومات بصرية والقرارات أوضح",
+  },
+  product: {
+    title: "لوحة تقديم المنتج",
+    subtitle: "إبراز نقاط البيع والمواصفات والصور الرئيسية",
+    intro: "تساعد لوحة تقديم المنتج على إنشاء صور وصفحات تقديم تركّز على نقاط البيع الأساسية والصور البصرية ووحدات المواصفات.",
+    tags: ["نقاط البيع", "الصورة الرئيسية", "تخطيط المواصفات"],
+    bullets: ["إدخال صور المنتج والوصف، واستخراج نقاط البيع الأساسية آلياً", "إنشاء صور منتج عالية الجودة", "ترتيب وحدات الأبرز والمواصفات بذكاء", "مناسب للصور التعريفية وصفحات المنتج"],
+    previews: detailConfigs.product.previews,
+    steps: [
+      { title: "إدخال المنتج", text: "رفع صور المنتج وإدخال التفاصيل.", icon: FileText },
+      { title: "استخراج النقاط", text: "تحليل وتلخيص القيمة الأساسية.", icon: Wand2 },
+      { title: "إنشاء الصورة", text: "إنشاء صورة رئيسية تركّز على المنتج.", icon: Image },
+      { title: "تخطيط المواصفات", text: "ترتيب وحدات المعاملات والأبرز.", icon: Blocks },
+      { title: "تنقيح", text: "ضبط النصوص والألوان والتخطيط.", icon: Pencil },
+      { title: "تصدير", text: "تصدير صورة تقديم المنتج.", icon: Upload },
+    ],
+    cta: "ابدأ الرسم",
+    slogan: "اجعل قصة المنتج أوضح وأكثر إقناعاً",
+  },
+};
+
 function getDetailConfig(canvas: PortalWorkspace, uiLang: UiLanguage) {
-  return uiLang === "zh" ? detailConfigs[canvas] : detailConfigsEn[canvas];
+  if (uiLang === "zh") return detailConfigs[canvas];
+  if (uiLang === "ar") return detailConfigsAr[canvas];
+  return detailConfigsEn[canvas];
 }
 
 function OrbitCard({
@@ -403,7 +517,7 @@ function OrbitCard({
                 <Icon className="h-4 w-4" />
               </span>
               <div className="line-clamp-2 text-[13px] font-bold leading-4 text-slate-900">
-                {uiLang === "zh" ? item.zhTitle : item.enTitle}
+                {uiLang === "zh" ? item.zhTitle : uiLang === "ar" ? item.arTitle : item.enTitle}
               </div>
             </div>
             <span className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ backgroundColor: item.accent }} />
@@ -411,7 +525,7 @@ function OrbitCard({
           <div className="overflow-hidden rounded-xl border border-[#EEF3FE] bg-[#F7FAFF]">
             <img
               src={item.image}
-              alt={uiLang === "zh" ? item.zhTitle : item.enTitle}
+              alt={uiLang === "zh" ? item.zhTitle : uiLang === "ar" ? item.arTitle : item.enTitle}
               className="h-[96px] w-full object-cover object-top transition duration-500 group-hover:scale-[1.04]"
             />
           </div>
@@ -429,6 +543,7 @@ function Header({
   setActiveSection,
   setActiveCanvas,
   setUiLang,
+  onShowDocs,
 }: {
   uiLang: UiLanguage;
   copy: { home: string; openRepo: string };
@@ -437,12 +552,13 @@ function Header({
   setActiveSection: (section: PortalSection) => void;
   setActiveCanvas: (workspace: PortalWorkspace) => void;
   setUiLang: Dispatch<SetStateAction<UiLanguage>>;
+  onShowDocs: () => void;
 }) {
   const isChinese = uiLang === "zh";
 
   return (
     <header className="rounded-2xl border border-white bg-white/94 px-4 py-2.5 shadow-[0_14px_38px_rgba(34,76,150,0.09)] backdrop-blur-xl lg:px-6">
-      <div className="flex flex-col gap-3 xl:grid xl:grid-cols-[220px_minmax(0,1fr)_132px] xl:items-center">
+      <div className="flex flex-col gap-3 xl:grid xl:grid-cols-[220px_minmax(0,1fr)_212px] xl:items-center">
         <button
           className="flex items-center gap-4 text-left"
           onClick={() => {
@@ -452,7 +568,7 @@ function Header({
           }}
         >
           <BrandIcon className="h-10 w-10" />
-          <span className="text-[22px] font-black text-slate-950">CanvasAnvil</span>
+          <span className="text-[22px] font-black text-slate-950">Mr.OSKAR</span>
         </button>
 
         <nav className="overflow-x-auto">
@@ -488,20 +604,34 @@ function Header({
                   scrollToPortalSection(item.id);
                 }}
               >
-                {uiLang === "zh" ? item.zhTitle : item.enTitle}
+                {uiLang === "zh" ? item.zhTitle : uiLang === "ar" ? item.arTitle : item.enTitle}
               </button>
             ))}
           </div>
         </nav>
 
-        <div className="flex justify-end gap-2">
-          <Button
-            variant="outline"
-            className="h-9 rounded-full border-[#D7E5FF] bg-white px-4 text-slate-700"
-            onClick={() => setUiLang((prev) => (prev === "zh" ? "en" : "zh"))}
+        <div className="flex items-center justify-end gap-2">
+          <button
+            className="h-9 rounded-full border border-[#D7E5FF] bg-white px-2 text-slate-500 transition hover:border-[#236CFF] hover:text-[#236CFF]"
+            title={uiLang === "zh" ? "文档" : uiLang === "ar" ? "التوثيق" : "Documentation"}
+            onClick={onShowDocs}
           >
-            {uiLang === "zh" ? "EN" : "\u4e2d\u6587"}
-          </Button>
+            <BookOpen className="h-4 w-4" />
+          </button>
+          <div className="flex overflow-hidden rounded-full border border-[#D7E5FF] bg-white text-[13px] font-bold">
+            <button
+              className={cn("h-9 px-3 transition", uiLang === "zh" ? "bg-[#236CFF] text-white" : "text-slate-600 hover:text-[#236CFF]")}
+              onClick={() => setUiLang("zh")}
+            >中文</button>
+            <button
+              className={cn("h-9 px-3 transition", uiLang === "en" ? "bg-[#236CFF] text-white" : "text-slate-600 hover:text-[#236CFF]")}
+              onClick={() => setUiLang("en")}
+            >EN</button>
+            <button
+              className={cn("h-9 px-3 transition", uiLang === "ar" ? "bg-[#236CFF] text-white" : "text-slate-600 hover:text-[#236CFF]")}
+              onClick={() => setUiLang("ar")}
+            >ع</button>
+          </div>
           <Button
             asChild
             className="h-9 rounded-full bg-[#236CFF] px-4 text-white shadow-[0_10px_26px_rgba(35,108,255,0.24)] hover:bg-[#1857D8]"
@@ -599,7 +729,7 @@ function CanvasDetailPage({
 
       <div className="mt-2 rounded-[22px] border border-white/80 bg-white/66 p-3 shadow-[0_16px_44px_rgba(34,76,150,0.08)]">
         <div className="mb-2 text-[20px] font-black text-slate-950">
-          <span className="border-b-4 border-[#236CFF] pb-1">{uiLang === "zh" ? "实现流程" : "Workflow"}</span>
+          <span className="border-b-4 border-[#236CFF] pb-1">{uiLang === "zh" ? "实现流程" : uiLang === "ar" ? "سير العمل" : "Workflow"}</span>
         </div>
 
         <div className="grid gap-3 xl:grid-cols-6">
@@ -658,28 +788,28 @@ function SimpleCanvasDetailPage({
   const uiLang = useUiLanguage();
   const config = getDetailConfig(canvas, uiLang);
   const Icon = canvasIcons[canvas];
-  const isEnglish = uiLang === "en";
+  const isNotChinese = uiLang !== "zh";
 
   return (
-    <section id={`portal-${canvas}`} className={cn("flex h-full items-center overflow-hidden", isEnglish ? "py-3" : "py-4")}>
+    <section id={`portal-${canvas}`} className={cn("flex h-full items-center overflow-hidden", isNotChinese ? "py-3" : "py-4")}>
       <div
         className={cn(
           "grid w-full rounded-[30px] border border-[#D6E7FF]/70 bg-white/32 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.62),0_24px_70px_rgba(34,76,150,0.08)] xl:grid-cols-[0.78fr_1.22fr]",
-          isEnglish ? "gap-6 p-6 2xl:gap-8 2xl:p-8" : "gap-7 p-7 2xl:gap-9 2xl:p-9",
+          isNotChinese ? "gap-6 p-6 2xl:gap-8 2xl:p-8" : "gap-7 p-7 2xl:gap-9 2xl:p-9",
         )}
       >
         <div className="self-center">
-          <h1 className={cn("font-black text-slate-950", isEnglish ? "text-[clamp(34px,3.5vw,50px)] leading-[1.03]" : "text-[clamp(42px,4.7vw,68px)] leading-[1.04]")}>{config.title}</h1>
-          <h2 className={cn("font-black leading-tight text-[#236CFF]", isEnglish ? "mt-2 text-[clamp(18px,1.75vw,23px)]" : "mt-2.5 text-[clamp(23px,2.35vw,32px)]")}>{config.subtitle}</h2>
-          <p className={cn("max-w-[620px] text-slate-600", isEnglish ? "mt-4 text-[clamp(15px,1.2vw,16px)] leading-7" : "mt-5 text-[18px] leading-8")}>{config.intro}</p>
+          <h1 className={cn("font-black text-slate-950", isNotChinese ? "text-[clamp(34px,3.5vw,50px)] leading-[1.03]" : "text-[clamp(42px,4.7vw,68px)] leading-[1.04]")}>{config.title}</h1>
+          <h2 className={cn("font-black leading-tight text-[#236CFF]", isNotChinese ? "mt-2 text-[clamp(18px,1.75vw,23px)]" : "mt-2.5 text-[clamp(23px,2.35vw,32px)]")}>{config.subtitle}</h2>
+          <p className={cn("max-w-[620px] text-slate-600", isNotChinese ? "mt-4 text-[clamp(15px,1.2vw,16px)] leading-7" : "mt-5 text-[18px] leading-8")}>{config.intro}</p>
 
-          <div className={cn("flex flex-wrap", isEnglish ? "mt-5 gap-2.5" : "mt-6 gap-3")}>
+          <div className={cn("flex flex-wrap", isNotChinese ? "mt-5 gap-2.5" : "mt-6 gap-3")}>
             {config.tags.map((tag) => (
               <span
                 key={tag}
                 className={cn(
                   "inline-flex max-w-full items-center gap-2 rounded-full border border-[#E6EEFC] bg-white font-bold leading-tight text-slate-700 shadow-[0_12px_28px_rgba(34,76,150,0.08)] transition duration-300 ease-out hover:-translate-y-1 hover:scale-[1.03] hover:border-[#BFD6FF] hover:shadow-[0_16px_34px_rgba(35,108,255,0.14)]",
-                  isEnglish ? "px-4 py-2.5 text-[14px]" : "px-5 py-3 text-[16px]",
+                  isNotChinese ? "px-4 py-2.5 text-[14px]" : "px-5 py-3 text-[16px]",
                 )}
               >
                 <Icon className="h-4 w-4 text-[#236CFF]" />
@@ -688,21 +818,21 @@ function SimpleCanvasDetailPage({
             ))}
           </div>
 
-          <div className={cn(isEnglish ? "mt-5 space-y-2.5" : "mt-6 space-y-3")}>
+          <div className={cn(isNotChinese ? "mt-5 space-y-2.5" : "mt-6 space-y-3")}>
             {config.bullets.map((bullet) => (
-              <div key={bullet} className={cn("flex items-start gap-3 text-slate-600", isEnglish ? "text-[15px] leading-6" : "text-[18px] leading-7")}>
+              <div key={bullet} className={cn("flex items-start gap-3 text-slate-600", isNotChinese ? "text-[15px] leading-6" : "text-[18px] leading-7")}>
                 <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-[#236CFF]" />
                 <span>{bullet}</span>
               </div>
             ))}
           </div>
 
-          <div className={cn(isEnglish ? "mt-6" : "mt-7")}>
-            <div className={cn("max-w-[540px] font-semibold tracking-[0.03em] text-[#236CFF]", isEnglish ? "mb-1.5 text-[16px] leading-6" : "mb-2 text-[20px] leading-7")}>{config.slogan}</div>
+          <div className={cn(isNotChinese ? "mt-6" : "mt-7")}>
+            <div className={cn("max-w-[540px] font-semibold tracking-[0.03em] text-[#236CFF]", isNotChinese ? "mb-1.5 text-[16px] leading-6" : "mb-2 text-[20px] leading-7")}>{config.slogan}</div>
             <button
               className={cn(
                 "group relative max-w-full overflow-visible px-12 font-black tracking-[0.08em] text-white transition duration-300 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#236CFF]/40",
-                isEnglish ? "h-[64px] min-w-[340px] text-[clamp(19px,2vw,24px)]" : "h-[72px] min-w-[380px] text-[clamp(26px,2.55vw,32px)]",
+                isNotChinese ? "h-[64px] min-w-[340px] text-[clamp(19px,2vw,24px)]" : "h-[72px] min-w-[380px] text-[clamp(26px,2.55vw,32px)]",
               )}
               onClick={() => onEnterWorkspace(canvas)}
             >
@@ -718,14 +848,14 @@ function SimpleCanvasDetailPage({
           </div>
         </div>
 
-        <div className={cn("grid content-center md:grid-cols-2", isEnglish ? "gap-x-5 gap-y-3" : "gap-x-7 gap-y-5")}>
+        <div className={cn("grid content-center md:grid-cols-2", isNotChinese ? "gap-x-5 gap-y-3" : "gap-x-7 gap-y-5")}>
           {config.previews.map((preview, index) => (
             <div key={preview.title}>
-              <div className={cn("pl-2 font-black leading-tight text-slate-900", isEnglish ? "mb-1.5 text-[15px]" : "mb-2 text-[18px]")}>{preview.title}</div>
+              <div className={cn("pl-2 font-black leading-tight text-slate-900", isNotChinese ? "mb-1.5 text-[15px]" : "mb-2 text-[18px]")}>{preview.title}</div>
               <button
                 className={cn(
                   "relative block w-full rounded-[18px] border border-[#DDE8FA] bg-white/94 text-left shadow-[0_16px_40px_rgba(34,76,150,0.12)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_22px_52px_rgba(34,76,150,0.16)]",
-                  isEnglish ? "p-3" : "p-4",
+                  isNotChinese ? "p-3" : "p-4",
                 )}
                 onClick={() => onPreviewImage(preview)}
               >
@@ -733,7 +863,7 @@ function SimpleCanvasDetailPage({
                 <span className={cn("absolute -top-4 h-8 w-20 rotate-6 bg-[#C9E0F8]/70 shadow-sm", index % 2 === 0 ? "right-14" : "right-24")} />
                 <span className="absolute right-3 top-3 h-8 w-8 rounded-bl-2xl border-b border-l border-[#DDE8FA] bg-gradient-to-br from-white/20 to-[#EEF4FF]" />
                 <span className="block overflow-hidden rounded-xl border border-[#EEF3FE] bg-[#F7FAFF]">
-                  <img src={preview.image} alt={preview.title} className={cn("w-full object-contain", isEnglish ? "h-[150px] 2xl:h-[168px]" : "h-[170px] 2xl:h-[204px]")} />
+                  <img src={preview.image} alt={preview.title} className={cn("w-full object-contain", isNotChinese ? "h-[150px] 2xl:h-[168px]" : "h-[170px] 2xl:h-[204px]")} />
                 </span>
               </button>
             </div>
@@ -744,11 +874,131 @@ function SimpleCanvasDetailPage({
   );
 }
 
+function DocsModal({ uiLang, onClose }: { uiLang: UiLanguage; onClose: () => void }) {
+  const isAr = uiLang === "ar";
+  const isZh = uiLang === "zh";
+  const dir = isAr ? "rtl" : "ltr";
+
+  const content = isZh
+    ? {
+        title: "Mr.OSKAR 文档",
+        close: "关闭",
+        sections: [
+          {
+            heading: "快速开始",
+            body: "点击右上角齿轮图标 → 配置设置，选择 AI 提供商（如 OpenAI / Anthropic / Gemini），输入你的 API Key，选择模型后保存。之后即可进入任意画布开始创作。",
+          },
+          {
+            heading: "六种画布",
+            body: "流程画布：生成 draw.io 兼容的流程图，支持节点级别的局部编辑。\n室内设计画布：从房间需求生成平面图、剖面图与材料清单。\nPPT画布：从主题生成大纲再逐页生成幻灯片，可导出为可编辑 PPT/PDF/图片。\n海报画布：快速生成风格统一的宣传海报，支持横竖版切换。\n信息图画布：将数据/观点转化为模块化可视页面。\n产品介绍画布：突出卖点、规格与主视觉，适合电商与展示页。",
+          },
+          {
+            heading: "AI 工作原理",
+            body: "每个画布均有专属 System Prompt，引导 AI 输出结构化 JSON 内容。前端解析 JSON 渲染为对应的可视化组件。你可以通过【规则约束】设置全局提示词，进一步定制输出风格。",
+          },
+          {
+            heading: "最佳实践",
+            body: "• 描述越具体，结果越精准——包括尺寸、颜色、受众等细节。\n• 使用【局部修改】修正单个节点/幻灯片，而不是重新生成整个内容。\n• PPT 生成时请等待所有页面完成再导出。\n• 上传图片/文件可为画布提供更丰富的上下文。",
+          },
+        ],
+      }
+    : isAr
+    ? {
+        title: "توثيق Mr.OSKAR",
+        close: "إغلاق",
+        sections: [
+          {
+            heading: "البدء السريع",
+            body: "انقر على أيقونة الترس في أعلى اليمين ← الإعدادات، اختر مزود الذكاء الاصطناعي (مثل OpenAI / Anthropic / Gemini)، أدخل مفتاح API، اختر النموذج ثم احفظ. بعدها يمكنك الدخول إلى أي لوحة والبدء في الإنشاء.",
+          },
+          {
+            heading: "اللوحات الست",
+            body: "لوحة التدفق: تولّد مخططات تدفق متوافقة مع draw.io مع دعم التحرير على مستوى العقد.\nلوحة التصميم الداخلي: من متطلبات الغرفة إلى مخططات ومقاطع وقوائم مواد.\nلوحة العروض: من الموضوع إلى مخطط ثم شرائح، تصدير كـ PPT/PDF/صور.\nلوحة الملصقات: ملصقات حملات سريعة بتوجيه فني متسق، أفقية وعمودية.\nلوحة المخططات البيانية: تحوّل البيانات والأفكار إلى صفحة بصرية بالوحدات.\nلوحة المنتج: إبراز نقاط البيع والمواصفات والصور الرئيسية.",
+          },
+          {
+            heading: "كيف يعمل الذكاء الاصطناعي",
+            body: "لكل لوحة System Prompt مخصص يوجّه الذكاء الاصطناعي لإنتاج JSON منظم. الواجهة تحلل JSON وتعرضه كمكونات مرئية. يمكنك ضبط 'القيود العامة' لكل مساحة عمل لتخصيص أسلوب المخرجات.",
+          },
+          {
+            heading: "أفضل الممارسات",
+            body: "• كلما كان وصفك أدق، كانت النتائج أفضل — ضمّن الأبعاد والألوان والجمهور المستهدف.\n• استخدم 'التعديل المحلي' لتصحيح عقدة أو شريحة واحدة بدلاً من إعادة الإنشاء الكامل.\n• عند إنشاء العروض، انتظر اكتمال جميع الشرائح قبل التصدير.\n• رفع صور أو ملفات يمنح الذكاء الاصطناعي سياقاً أغنى.",
+          },
+        ],
+      }
+    : {
+        title: "Mr.OSKAR Documentation",
+        close: "Close",
+        sections: [
+          {
+            heading: "Quick Start",
+            body: "Click the gear icon (top right) → Settings, choose an AI provider (OpenAI / Anthropic / Gemini / etc.), enter your API key, pick a model, and save. Then enter any canvas to start creating.",
+          },
+          {
+            heading: "The Six Canvases",
+            body: "Flow Canvas: Generates draw.io-compatible flow diagrams with node-level local editing.\nInterior Canvas: From room requirements to floor plans, sections, and material lists.\nPPT Canvas: Topic → outline → slides per page; exports as editable PPT / PDF / images.\nPoster Canvas: Fast campaign posters with consistent art direction; landscape and portrait.\nInfographic Canvas: Turns data/opinions into a modular visual page.\nProduct Canvas: Highlights selling points, specs, and key visuals for e-commerce and presentations.",
+          },
+          {
+            heading: "How AI Works",
+            body: "Each canvas has a dedicated System Prompt that guides the AI to produce structured JSON. The frontend parses the JSON and renders it as visual components. Use 'Global Constraints' in each workspace to further customise output style.",
+          },
+          {
+            heading: "Best Practices",
+            body: "• The more specific your description, the better the result — include dimensions, colours, and target audience.\n• Use local patch/replace to fix a single node or slide instead of regenerating everything.\n• When generating PPT slides, wait for all pages to finish before exporting.\n• Uploading images or files gives the AI richer context.",
+          },
+        ],
+      };
+
+  return (
+    <motion.div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/52 p-6 backdrop-blur-md"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={onClose}
+    >
+      <motion.div
+        dir={dir}
+        className="relative max-h-[88vh] w-full max-w-[720px] overflow-y-auto rounded-[28px] border border-white/70 bg-white p-8 shadow-[0_28px_90px_rgba(7,31,75,0.28)]"
+        initial={{ opacity: 0, y: 24, scale: 0.96 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: 18, scale: 0.96 }}
+        transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="mb-6 flex items-center justify-between gap-4">
+          <h2 className="text-[24px] font-black text-slate-950">{content.title}</h2>
+          <button
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-[#DDE8FA] bg-[#F7FAFF] text-slate-600 transition hover:bg-[#EAF2FF] hover:text-[#236CFF]"
+            onClick={onClose}
+            aria-label={content.close}
+          >
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+        <div className="space-y-6">
+          {content.sections.map((section) => (
+            <div key={section.heading} className="rounded-2xl border border-[#E3ECFA] bg-[#F7FAFF] p-5">
+              <h3 className="mb-2.5 flex items-center gap-2.5 text-[17px] font-black text-slate-900">
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#236CFF] text-sm font-black text-white">
+                  <BookOpen className="h-3.5 w-3.5" />
+                </span>
+                {section.heading}
+              </h3>
+              <p className="whitespace-pre-line text-[14px] leading-7 text-slate-600">{section.body}</p>
+            </div>
+          ))}
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 export function PortalPage({ onEnterWorkspace }: PortalPageProps) {
   const [uiLang, setUiLang] = useState<UiLanguage>(() => getUiLanguage());
   const [activeCanvas, setActiveCanvas] = useState<PortalWorkspace>("flow");
   const [activeSection, setActiveSection] = useState<PortalSection>("home");
   const [previewImage, setPreviewImage] = useState<PreviewImage | null>(null);
+  const [showDocs, setShowDocs] = useState(false);
   const [paused, setPaused] = useState(false);
   const pageLockRef = useRef(false);
   const orderedSections: PortalSection[] = ["home", ...portalCanvasItems.map((item) => item.id)];
@@ -789,31 +1039,48 @@ export function PortalPage({ onEnterWorkspace }: PortalPageProps) {
         titleB: "\u521b\u4f5c\u7684",
         titleAccent: "\u667a\u80fd\u5de5\u4f5c\u53f0",
         intro:
-          "CanvasAnvil \u652f\u6301\u516d\u79cd\u753b\u5e03\uff1a\u6d41\u7a0b\u753b\u5e03\u3001\u5ba4\u5185\u8bbe\u8ba1\u753b\u5e03\u3001PPT\u753b\u5e03\u3001\u6d77\u62a5\u753b\u5e03\u3001\u4fe1\u606f\u56fe\u753b\u5e03\u3001\u4ea7\u54c1\u4ecb\u7ecd\u753b\u5e03\u3002\u63d0\u4f9b\u7ed3\u6784\u5316\u751f\u6210\u4e0e\u672c\u5730\u5c40\u90e8\u4fee\u6539\u80fd\u529b\uff0c\u5e2e\u52a9\u4f60\u9ad8\u6548\u3001\u53ef\u63a7\u5730\u5b8c\u6210\u5404\u7c7b\u53ef\u89c6\u5316\u521b\u4f5c\u3002",
+          "Mr.OSKAR \u652f\u6301\u516d\u79cd\u753b\u5e03\uff1a\u6d41\u7a0b\u753b\u5e03\u3001\u5ba4\u5185\u8bbe\u8ba1\u753b\u5e03\u3001PPT\u753b\u5e03\u3001\u6d77\u62a5\u753b\u5e03\u3001\u4fe1\u606f\u56fe\u753b\u5e03\u3001\u4ea7\u54c1\u4ecb\u7ecd\u753b\u5e03\u3002\u63d0\u4f9b\u7ed3\u6784\u5316\u751f\u6210\u4e0e\u672c\u5730\u5c40\u90e8\u4fee\u6539\u80fd\u529b\uff0c\u5e2e\u52a9\u4f60\u9ad8\u6548\u3001\u53ef\u63a7\u5730\u5b8c\u6210\u5404\u7c7b\u53ef\u89c6\u5316\u521b\u4f5c\u3002",
         tagA: "\u516d\u79cd\u753b\u5e03",
         tagB: "\u7ed3\u6784\u5316\u751f\u6210",
         tagC: "\u5c40\u90e8\u4fee\u6539",
         openRepo: "GitHub",
         footerLicense: "\u5f00\u6e90\u534f\u8bae\uff1aAGPL-3.0",
         footerContact: "\u8054\u7cfb\u65b9\u5f0f",
-        hub: "CanvasAnvil",
+        hub: "Mr.OSKAR",
         hubSub: "\u591a\u753b\u5e03\u5de5\u4f5c\u53f0",
         mobileHint: "\u70b9\u51fb\u5361\u7247\u8fdb\u5165\u5bf9\u5e94\u753b\u5e03",
       }
+    : uiLang === "ar"
+    ? {
+        home: "الرئيسية",
+        titleA: "منصة متعددة اللوحات",
+        titleB: "للإبداع",
+        titleAccent: " الذكي",
+        intro: "Mr.OSKAR يدعم ست لوحات: التدفق، التصميم الداخلي، العروض، الملصقات، المخططات البيانية، والمنتجات. يوفر إنشاءً منظماً وتحريراً محلياً دقيقاً لإنجاز التصميم بسرعة وتحكم.",
+        tagA: "ست لوحات",
+        tagB: "إخراج منظم",
+        tagC: "تعديل وتحرير",
+        openRepo: "GitHub",
+        footerLicense: "الرخصة: AGPL-3.0",
+        footerContact: "التواصل",
+        hub: "Mr.OSKAR",
+        hubSub: "منصة اللوحات الذكية",
+        mobileHint: "اضغط على بطاقة للدخول إلى مساحة العمل",
+      }
     : {
         home: "Home",
-        titleA: "An open-source project",
+        titleA: "An AI-powered platform",
         titleB: "for multi-canvas",
-        titleAccent: "creation",
+        titleAccent: " creation",
         intro:
-          "CanvasAnvil supports six canvases: flow, interior, PPT, poster, infographic, and product. It combines structured generation with local Patch / Replace editing so visual creation stays fast and controllable.",
+          "Mr.OSKAR supports six canvases: flow, interior, PPT, poster, infographic, and product. It combines structured generation with local Patch / Replace editing so visual creation stays fast and controllable.",
         tagA: "Six Canvases",
         tagB: "Structured Output",
         tagC: "Patch and Replace",
         openRepo: "GitHub",
         footerLicense: "License: AGPL-3.0",
         footerContact: "Contact",
-        hub: "CanvasAnvil",
+        hub: "Mr.OSKAR",
         hubSub: "Multi-canvas workspace",
         mobileHint: "Tap a card to enter its workspace",
       };
@@ -885,6 +1152,7 @@ export function PortalPage({ onEnterWorkspace }: PortalPageProps) {
           setActiveSection={setActiveSection}
           setActiveCanvas={setActiveCanvas}
           setUiLang={setUiLang}
+          onShowDocs={() => setShowDocs(true)}
         />
         </div>
 
@@ -1014,10 +1282,10 @@ export function PortalPage({ onEnterWorkspace }: PortalPageProps) {
                   }}
                 >
                   <div className="mb-2 flex items-center justify-between">
-                    <span className="text-sm font-bold text-slate-900">{uiLang === "zh" ? item.zhTitle : item.enTitle}</span>
+                    <span className="text-sm font-bold text-slate-900">{uiLang === "zh" ? item.zhTitle : uiLang === "ar" ? item.arTitle : item.enTitle}</span>
                     <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: item.accent }} />
                   </div>
-                  <img src={item.image} alt={uiLang === "zh" ? item.zhTitle : item.enTitle} className="h-[128px] w-full rounded-xl border border-[#EEF3FE] object-cover object-top" />
+                  <img src={item.image} alt={uiLang === "zh" ? item.zhTitle : uiLang === "ar" ? item.arTitle : item.enTitle} className="h-[128px] w-full rounded-xl border border-[#EEF3FE] object-cover object-top" />
                 </button>
               ))}
             </div>
@@ -1037,6 +1305,12 @@ export function PortalPage({ onEnterWorkspace }: PortalPageProps) {
         <div className="fixed inset-x-0 bottom-0 z-40 px-4 sm:px-6 lg:px-10">
           <Footer copy={copy} />
         </div>
+
+        <AnimatePresence>
+          {showDocs && (
+            <DocsModal uiLang={uiLang} onClose={() => setShowDocs(false)} />
+          )}
+        </AnimatePresence>
 
         <AnimatePresence>
           {previewImage && (
@@ -1060,7 +1334,7 @@ export function PortalPage({ onEnterWorkspace }: PortalPageProps) {
                   <button
                     className="flex h-10 w-10 items-center justify-center rounded-full border border-[#DDE8FA] bg-[#F7FAFF] text-slate-600 transition hover:bg-[#EAF2FF] hover:text-[#236CFF]"
                     onClick={() => setPreviewImage(null)}
-                    aria-label={uiLang === "zh" ? "关闭预览" : "Close preview"}
+                    aria-label={uiLang === "zh" ? "关闭预览" : uiLang === "ar" ? "إغلاق المعاينة" : "Close preview"}
                   >
                     <X className="h-5 w-5" />
                   </button>
