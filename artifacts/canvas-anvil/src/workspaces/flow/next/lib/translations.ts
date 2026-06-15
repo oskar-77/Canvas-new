@@ -1,4 +1,4 @@
-﻿export type Language = "en" | "zh";
+export type Language = "en" | "zh" | "ar";
 
 const en = {
   // ChatPanel
@@ -266,5 +266,137 @@ export const translations = {
     "common.saved": "保存成功",
     "common.regenerate_error": "重新生成失败：缺少历史状态",
     "common.busy": "系统忙碌中，请稍后...",
+  },
+  ar: {
+    // ChatPanel
+    "app.title": "مساعد المخططات الذكي",
+    "welcome.title": "أنشئ مخططات بالذكاء الاصطناعي",
+    "welcome.desc": "صف ما تريد إنشاءه أو ارفع صورة لاستنساخها",
+    "app.about": "عن التطبيق",
+    "chat.panel.show": "إظهار لوحة المحادثة (Ctrl+B)",
+    "chat.panel.hide": "إخفاء لوحة المحادثة (Ctrl+B)",
+    "chat.panel.title": "مساعد مخططات التدفق",
+    "chat.settings": "الإعدادات",
+    "chat.vertical.title": "محادثة الذكاء الاصطناعي",
+
+    // ChatInput
+    "input.placeholder": "صف مخططك أو ارفع ملفاً...",
+    "input.clear": "مسح المحادثة",
+    "input.upload": "رفع ملف (صورة، PDF، نص)",
+    "input.upload_image": "رفع صورة",
+    "input.upload_file": "رفع ملف",
+    "input.upload_file_types": "رفع ملف (.pdf, .docx, .txt)",
+    "input.send": "إرسال",
+    "input.stop": "إيقاف الإنشاء",
+    "input.history": "السجل",
+    "input.history.toggle": "تبديل السجل",
+    "input.deep_thinking": "التفكير العميق",
+
+    // ChatMessageDisplay
+    "message.sending": "جارٍ الإرسال...",
+    "message.parsing_files": "جارٍ تحليل الملفات...",
+    "message.thinking": "الذكاء الاصطناعي يفكر ويولّد الإجابة...",
+    "message.copy": "نسخ الرسالة",
+    "message.copied": "تم النسخ!",
+    "message.copy.failed": "فشل النسخ",
+    "message.regenerate": "إعادة الإنشاء",
+    "message.edit": "تعديل الرسالة",
+    "message.good": "إجابة جيدة",
+    "message.bad": "إجابة غير مناسبة",
+    "message.edit.cancel": "إلغاء",
+    "message.edit.save": "حفظ وإرسال",
+
+    // SettingsDialog
+    "settings.title": "الإعدادات",
+    "settings.language": "اللغة",
+    "settings.theme": "المظهر",
+    "settings.provider": "مزود الذكاء الاصطناعي",
+    "settings.model": "معرّف النموذج",
+    "settings.image_model": "نموذج الصور",
+    "settings.api_key": "مفتاح API",
+    "settings.base_url": "عنوان URL الأساسي (اختياري)",
+    "settings.access_code": "رمز الوصول (اختياري)",
+    "settings.close": "إغلاق",
+    "settings.save": "حفظ",
+    "settings.general": "عام",
+    "settings.theme.desc": "الوضع الداكن/الفاتح للواجهة ولوحة DrawIO.",
+    "settings.close_protection": "الحماية من الإغلاق الخطأ",
+    "settings.close_protection.desc": "إظهار تأكيد عند مغادرة الصفحة.",
+    "settings.ai_config": "إعداد الذكاء الاصطناعي",
+    "settings.ai_provider.desc": "استخدم مفتاح API الخاص بك لتجاوز حدود الاستخدام. يُحفظ مفتاحك محلياً في المتصفح ولا يُرسل إلى الخادم.",
+    "settings.provider.placeholder": "اختر مزوداً",
+    "settings.provider.default": "الافتراضي (الخادم)",
+    "settings.api_key.placeholder": "sk-...",
+    "settings.api_key.desc": "اتركه فارغاً لاستخدام المفتاح الافتراضي",
+    "settings.base_url.placeholder": "https://api.openai.com/v1",
+    "settings.drawio_style": "نمط DrawIO",
+    "settings.drawio_style.desc": "نمط اللوحة: ",
+    "settings.drawio_style.minimal": "بسيط",
+    "settings.drawio_style.sketch": "رسم يدوي",
+    "settings.drawio_style.switch": "التبديل إلى ",
+    "settings.clear": "مسح الإعدادات",
+
+    // QuotaLimitToast
+    "quota.limit.reached": "تم الوصول إلى الحد اليومي",
+    "quota.limit.desc": "لقد وصلت إلى حدك اليومي البالغ {limit} طلباً.",
+    "quota.limit.tip": "نصيحة: يمكنك استخدام مفتاح API الخاص بك (انقر على أيقونة الإعدادات) أو استضافة المشروع ذاتياً لتجاوز هذه الحدود.",
+    "quota.limit.reset": "يتجدد حدك غداً. شكراً لتفهمك!",
+    "quota.sponsor": "ادعم المشروع",
+    "quota.learn_more": "اعرف المزيد ->",
+
+    // ResetWarningModal
+    "reset.title": "مسح كل شيء؟",
+    "reset.desc": "سيؤدي هذا إلى مسح المحادثة الحالية وإعادة تعيين المخطط. لا يمكن التراجع عن هذا الإجراء.",
+    "reset.confirm": "مسح كل شيء",
+    "reset.cancel": "إلغاء",
+
+    // SaveDialog
+    "save.title": "حفظ المخطط",
+    "save.desc": "اختر تنسيقاً لحفظ مخططك.",
+    "save.format": "التنسيق",
+    "save.filename": "اسم الملف",
+    "save.filename.placeholder": "diagram",
+    "save.download": "تنزيل",
+
+    // ExamplePanel
+    "example.aws.title": "بنية AWS",
+    "example.aws.desc": "إنشاء مخطط بنية سحابية بأيقونات AWS",
+    "example.flowchart.title": "استنساخ مخطط تدفق",
+    "example.flowchart.desc": "ارفع مخطط تدفق موجوداً واستنسخه",
+    "example.creative.title": "رسم إبداعي",
+    "example.creative.desc": "ارسم شيئاً ممتعاً وإبداعياً",
+    "example.cached": "الأمثلة مخزنة مؤقتاً للاستجابة الفورية",
+    "example.new": "جديد",
+    "examples.title": "أمثلة سريعة",
+    "examples.paper.title": "ورقة إلى مخطط",
+    "examples.paper.desc": "ارفع .pdf, .txt, .md, .json, .csv, .py, .js, .ts والمزيد",
+    "examples.animated.title": "مخطط متحرك",
+    "examples.animated.desc": "ارسم بنية Transformer بموصلات متحركة",
+    "tooltip.history": "سجل المخططات",
+    "tooltip.save": "حفظ المخطط",
+    "tooltip.deep_thinking": "التفكير العميق",
+
+    // HistoryDialog
+    "history.title": "سجل المخططات",
+    "history.empty": "لا يوجد سجل حتى الآن. أرسل رسائل لإنشاء سجل المخططات.",
+    "history.version": "الإصدار",
+    "history.restore": "الاستعادة إلى الإصدار",
+    "history.confirm": "تأكيد",
+    "history.cancel": "إلغاء",
+    "history.close": "إغلاق",
+
+    // GlobalConstraintsDialog
+    "global_constraints.title": "القيود العامة",
+    "global_constraints.description": "أدخل تعليمات ستُطبَّق على كل استجابة من الذكاء الاصطناعي.",
+    "global_constraints.placeholder": "مثال: استخدم دائماً اللون الأزرق لعقد القرار...",
+    "tooltip.global_constraints": "القيود العامة",
+
+    // Common
+    "common.error": "خطأ",
+    "common.loading": "جارٍ التحميل...",
+    "common.save": "حفظ",
+    "common.saved": "تم الحفظ بنجاح",
+    "common.regenerate_error": "فشل إعادة الإنشاء: حالة السجل مفقودة",
+    "common.busy": "النظام مشغول، يرجى الانتظار...",
   },
 };
